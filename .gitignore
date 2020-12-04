@@ -107,4 +107,4 @@ dist
 
 misc/
 
-.dbseed.sql/
+dbseed.sql
