@@ -2,9 +2,12 @@ const inquirer = require( "inquirer" );
 const db = require("./dbCalls");
 
 
+class UserPrompts{
+ constructor(userPrompts){
+     this.userPrompts = userPrompts
+ }
 
- 
-function addDepartmentPrompt(){
+addDepartmentPrompt(){
         inquirer.prompt({
             name: "newDepartment",
             type: "input",
@@ -16,9 +19,9 @@ function addDepartmentPrompt(){
         })
     }
 
-
-
-
-module.exports = {
-    addDepartmentPrompt: addDepartmentPrompt
 }
+
+
+
+
+module.exports = UserPrompts
