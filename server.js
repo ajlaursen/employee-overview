@@ -3,7 +3,6 @@ const inquirer = require("inquirer");
 const ctable = require("console.table");
 const connection = require("./config/connection");
 const db = require("./public/dbCalls");
-const userPrompts = require("./public/userPrompts");
 
 const app = express();
 const PORT = process.env.PORT || 3301;
@@ -45,12 +44,17 @@ function init() {
           value: "add_employee",
         },
         {
+          name: "Update employee role",
+          value: "update_employee",
+        },
+        {
           name: "Exit",
           value: "exit",
         },
       ],
     })
     .then(async function (answers) {
+      // initial branch of funcitons
       switch (answers.initChoice) {
         case "veiw_employees":
           const emp = await db.viewEmployees();
@@ -69,9 +73,6 @@ function init() {
           break;
         case "add_departments":
           // want to use user prompts js file but cannot figure out async functionality to not immediatly run init()
-
-          // const userPrompt = await db.addDepartmentPrompt()
-          // const restart = await init()
 
           inquirer
             .prompt({
@@ -146,7 +147,6 @@ function init() {
               },
             ])
             .then(async function (answers) {
-               
               const newAddedEmployee = await db.addEmployee(
                 answers.firstName,
                 answers.lastName,
@@ -154,6 +154,33 @@ function init() {
                 answers.dept
               );
               console.table(newAddedEmployee);
+              init();
+            });
+          break;
+        case "update_employee":
+          const shortEmployeeList = await db.promptEmployees();
+          const roleList2 = await db.rolePrompt();
+          inquirer
+            .prompt([
+              {
+                name: "employeePicked",
+                type: "list",
+                message: "What employee employee do you want to update?",
+                choices: shortEmployeeList,
+              },
+              {
+                name: "role",
+                type: "list",
+                message: "What is the employee's new role?",
+                choices: roleList2,
+              },
+            ])
+            .then(async function (answers) {
+              const updatedEmployee = await db.updateEmployee(
+                answers.role,
+                answers.employeePicked
+              );
+              console.table(updatedEmployee);
               init();
             });
           break;
