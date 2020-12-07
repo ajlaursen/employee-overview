@@ -72,7 +72,6 @@ class DB {
       manager_id: manager,
     });
     return this.viewEmployees();
-    );
   }
 }
 
