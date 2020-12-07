@@ -72,8 +72,6 @@ function init() {
           init();
           break;
         case "add_departments":
-          // want to use user prompts js file but cannot figure out async functionality to not immediatly run init()
-
           inquirer
             .prompt({
               name: "newDepartment",

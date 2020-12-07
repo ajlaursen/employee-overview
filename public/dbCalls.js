@@ -21,9 +21,7 @@ class DB {
       { role_id: roleId },
       { id: id },
     ]);
-    return this.connection.query(
-      'SELECT e.id, e.first_name, e.last_name, d.name AS "Department Name", r.title AS "Role Title" FROM employee e LEFT JOIN role r ON e.role_id = r.id LEFT JOIN department d ON r.department_id = d.id'
-    );
+    return this.viewEmployees();
   }
   veiwDepartments() {
     return this.connection.query(
@@ -42,18 +40,6 @@ class DB {
     );
   }
 
-  addDepartmentPrompt() {
-    inquirer
-      .prompt({
-        name: "newDepartment",
-        type: "input",
-        message: "Enter department name.",
-      })
-      .then(async (answers) => {
-        const newDepts = await db.addDepartment(answers.newDepartment);
-        console.table(newDepts);
-      });
-  }
   deptPrompt() {
     return this.connection.query(
       'SELECT name AS "name", id AS "value" FROM department'
@@ -85,8 +71,7 @@ class DB {
       role_id: role,
       manager_id: manager,
     });
-    return this.connection.query(
-      'SELECT e.id, e.first_name, e.last_name, d.name AS "Department Name", r.title AS "Role Title" FROM employee e LEFT JOIN role r ON e.role_id = r.id LEFT JOIN department d ON r.department_id = d.id'
+    return this.viewEmployees();
     );
   }
 }
