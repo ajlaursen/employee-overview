@@ -13,6 +13,9 @@
 
 ## Installation
 * Npm install
+* Adjust .evn file with your credentials and remove ".EXAMPLE"
+* Run MySQL on the Schema and then on the bdseed.sql 
+* use "npm start" in your terminal to start the application
 
 ## Testing
 * No testing available
